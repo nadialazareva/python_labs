@@ -8,4 +8,8 @@ for i in range(N):
         och+=1
     else:
         zaoch+=1
+print(f"in_1: ")
+print(f"in_2: ")
+print(f"in_3: ")
+print(f"in_4: ")
 print(f"out: {och} {zaoch}")
