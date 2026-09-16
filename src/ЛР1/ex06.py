@@ -1,4 +1,4 @@
-N = int(input(" in_1: "))
+N = int(input("in_1: "))
 och = 0
 zaoch = 0
 for i in range(N):
