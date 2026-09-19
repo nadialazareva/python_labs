@@ -15,7 +15,7 @@ def flatten(mat: list[list | tuple])-> list:
             fl.extend(i)
         else:
             raise TypeError
-        return fl
+    return fl
 '''
 print(min_max([3,-1,5,5,0]))
 print(min_max([42]))
@@ -26,7 +26,13 @@ try:
 except ValueError:
     print("ValueError")
 '''
+'''
 print(unique_sorted([3,1,2,1,3]))
 print(unique_sorted([]))
 print(unique_sorted([-1,-1,0,2,2]))
 print(unique_sorted([1.0,1,2.5,2.5,0]))
+'''
+print(flatten([[1,2],[3,4]]))
+print(flatten([[1,2],(3,4,5)]))
+print(flatten([[1],[],[2,3]]))
+print(flatten([[1,2],"ab"]))
