@@ -4,7 +4,7 @@
 
 ### Сначала проверяем список на пустоту. Если список пуст, выходит исключение ValueError. В противном случае возвращаются встроенные функции
 
-'''python
+'''
 def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
     if not nums:
         raise ValueError
