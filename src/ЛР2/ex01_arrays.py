@@ -17,7 +17,6 @@ def flatten(mat: list[list | tuple])-> list:
             raise TypeError
         return fl
 
-
 print(min_max([3,-1,5,5,0]))
 print(min_max([42]))
 print(min_max([-5,-2,-9]))
