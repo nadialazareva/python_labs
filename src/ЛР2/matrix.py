@@ -37,7 +37,9 @@ def col_sums(mat: list[list[float | int]]) -> list[float]:
             raise ValueError
     transposed = [list(row) for row in zip(*mat)]
     return [int(sum(col)) for col in transposed]
+'''
 print(col_sums([[1, 2, 3], [4, 5, 6]]))
 print(col_sums([[-1, 1], [10, -10]]))
 print(col_sums([[0, 0], [0, 0]]))
 print(col_sums([[1, 2], [3]]))
+'''
