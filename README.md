@@ -130,6 +130,8 @@ def format_record(rec: tuple[str, str, float]) -> str:
     if not isinstance(rec,tuple):
         raise TypeError
     fio, group, gpa = rec
+    if len(rec)>3 or len(rec)<3:
+        raise Error
     if not isinstance(fio,str) or not isinstance(group, str):
         raise TypeError
     if not isinstance(gpa, (int, float)):
