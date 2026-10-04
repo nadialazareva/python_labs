@@ -1,13 +1,13 @@
 import re
 
 def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
+    if yo2e:
+        text = text.replace('ё', 'е').replace('Ё', 'Е')
 
     if casefold:
         text = text.casefold()
-
-    if yo2e:
-        text = text.replace('ё', 'е').replace('Ё', 'Е')
-    text = text.replace('\t',' ').replace('\r', ' ').replace('\n', ' ')
+    else:
+        text = text.lower()
     return ' '.join(text.split())
 
 #--------------------------------------------------------------------------------------
@@ -51,4 +51,25 @@ if __name__ == '__main__':
     assert top_n(freq2, 2) == [("aa", 2), ("bb", 2)]
 
 print('Все тесты пройдены')
+
+if __name__ == '__main__':
+    print("-"*30)
+    print(normalize("ПрИвЕт\nМИр\t"))
+    print(normalize("ёжик, Ёлка"))
+    print(normalize("Hello\r\nWorld"))
+    print(normalize("  двойные   пробелы  "))
+    print("-"*30)
+    print(tokenize("привет мир"))
+    print(tokenize("hello,world!!!"))
+    print(tokenize("по-настоящему круто"))
+    print(tokenize("2025 год"))
+    print(tokenize("emoji 😀 не слово"))
+    print("-"*30)
+    print(count_freq(["a", "b", "a", "c", "b", "a"]))
+    print(top_n(freq,2))
+    print("-"*30)
+    print(count_freq(["bb", "aa", "bb", "aa", "cc"]))
+    print(top_n(freq2,2))
+
+
 
