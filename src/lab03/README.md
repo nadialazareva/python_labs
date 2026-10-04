@@ -46,6 +46,34 @@ def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
 Вызываем функцию вывода самых популярных слов. По умолчанию возвращаем число 5(сколько топ-слов вернуть).Превращаем словарь в список пар(кортежей) и сортируем его. Лямбда-функция юерет x как одну пару. Берем второй элемент пары с минусом. Так как мы сортируем по возрастанию, минус переворачивает порядок: чем больше было число, тем меньше оно станет с минусом, и тем раньше в списке окажется. Срез по n.
 ![Картинка 3](./image/ЛР3/image1.3_lab03.png)
 
+## Задание 2
+
+```python
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from lib.text import normalize, tokenize, count_freq, top_n
+
+def main():
+    text = sys.stdin.read()
+    normalized_text = normalize(text)
+    tokens = tokenize(normalized_text)
+    total_words = len(tokens)
+    freq = count_freq(tokens)
+    unique_words = len(freq)
+    top5 = top_n(freq, 5)
+    print(f"Всего слов: {total_words}")
+    print(f"Уникальных слов: {unique_words}")
+    print(f"Топ-5:")
+    for word, count in top5:
+        print(f"{word}:{count}")
+if __name__ == "__main__":
+    main()
+```
+Подключаем системные модули для работы с путями. ".." означает подняться на одну папку вверх. Программа читает весь текст, введенный в терминал, пока не нажму Ctrl+Z, сохраняем в переменную. Нормализуем текст, разбиваем на отдельные слова, считаем обшее количество слов. Подсчитываем, сколько раз встречается каждое слово, считаем количество уникальных слов, берем 5 самых популярных слов. 
+![Картинка 4](./image/lab03/image2_lab03.png)
+
+
 
 
 
