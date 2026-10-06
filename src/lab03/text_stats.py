@@ -3,7 +3,7 @@ import os
 
 #Добавляем корень проекта в пути поискаБ чтобы работал import src.lib...
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
-from src.lib.text import normalize, tokenize, count_freq, top_n
+from lib.text import normalize, tokenize, count_freq, top_n
 
 """Задание со звездочкой"""
 
