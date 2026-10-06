@@ -49,6 +49,12 @@ def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
 
 ![Картинка 3](/image/lab03/image1.3_lab03.png)
 
+## Проверка тест-кейсов
+
+Выполняются только при прямом запуске файла и игнорируются при его импорте благодаря if __name__=="__main__".
+
+![тесткейсы](/image/lab03/check_test03.png)
+
 ## Скрипт src/lab03/text_stats.py
 
 ```python
