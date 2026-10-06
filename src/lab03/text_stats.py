@@ -42,3 +42,5 @@ def main():
             print('...')
 if __name__ == "__main__":
     main()
+
+##$ echo "Привет, мир! Привет!!!" | python src/text_stats.py
