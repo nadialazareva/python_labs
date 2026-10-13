@@ -12,7 +12,7 @@ def main():
     text = sys.stdin.read()
     if text.strip() == '':
         raise ValueError('Не был введен текст')
-    beauty = 0 #Переменная, определяющая красивый вид
+    beauty = 1#Переменная, определяющая красивый вид
 
     normalized_text = normalize(text)
     tokens = tokenize(normalized_text)

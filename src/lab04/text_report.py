@@ -1,0 +1,83 @@
+from src.lab04.io_txt_csv import read_text, write_csv, ensure_parent_dir
+from lib.text import normalize, tokenize, top_n, count_freq
+import argparse
+from pathlib import Path
+
+def generate_report(input_path, output_path):
+    text = read_text(input_path)   #читаем текст
+    normal_text = normalize(text)  #нормализуем 
+    tokens = tokenize(normal_text) #разбиваем на слова(токены)
+    freq = count_freq(tokens)      #считаем частоту слов
+    top_words = top_n(freq, 5)     #берем топ-5 слов
+
+    write_csv(top_words, output_path, header=("word", "count"))
+
+    total_words = len(tokens) #общее кол-во слов
+    unique_words = len(freq)  #кол-во уникальных слов
+
+    print(f"Всего слов: {total_words}")
+    print(f"Уникальных слов: {unique_words}")
+    print("Топ-5:")
+    for word, count in top_words:
+        print(f"{word}:{count}")
+
+#===============================================================================
+#ТЕСТ-КЕЙСЫ
+#===============================================================================
+
+def run_test_a():
+    '''Тест А: обычный файл с текстом'''
+    print("\n" + "="*40)
+    print("ТЕСТ А: Один файл")
+    print("="*40)
+
+    input_file = "data/lab04/input.txt"
+    output_file = "data/lab04/report.csv"
+
+    ensure_parent_dir(input_file)
+    Path(input_file).write_text("Привет, мир, привет!!!", encoding = "utf-8")
+
+    #Запускаем генерацию
+    generate_report(input_file, output_file)
+
+    #Проверяем CSV
+    print("\n---Проверка report.csv---")
+    actual_csv = read_text(output_file)
+    expected_csv = "word,count\nпривет,2\nмир,1\n"
+    if actual_csv==expected_csv:
+        print("CSV совпадает с ожидаемым!")
+    else:
+        print("Ошибка! CSV не совпадает с ожидаемым")
+
+def run_test_b_empty():
+    '''Тест B: пустой файл'''
+    print("\n" + "="*40)
+    print("ТЕСТ B: Пустой файл")
+    print("="*40)
+
+    input_file = "data/lab04/empty.txt"
+    output_file = "data/lab04/report_empty.csv"
+
+    #Создаем пустой входной файл
+    write_csv([],input_file)
+    #Запускаем генерацию
+    generate_report(input_file,output_file)
+
+    #Проверяем CSV
+    print("\n---Проверка report_empty.csv---")
+    actual_csv = read_text(output_file)
+    expected_csv = "word,count\n"
+    if actual_csv==expected_csv:
+        print("CSV корректен")
+    else:
+        print("CSV не совпадает")
+
+if __name__ == "__main__":
+    run_test_a()
+    run_test_b_empty()
+
+# python -m src.lab04.text_report
+
+
+
+
