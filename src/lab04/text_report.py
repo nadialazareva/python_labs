@@ -3,8 +3,8 @@ from lib.text import normalize, tokenize, top_n, count_freq
 import argparse
 from pathlib import Path
 
-def generate_report(input_path, output_path):
-    text = read_text(input_path)   #читаем текст
+def generate_report(input_path: str | Path, output_path: str | Path, encoding: str = "utf-8"):
+    text = read_text(input_path, encoding=encoding) #читаем текст, передаем кодировку
     normal_text = normalize(text)  #нормализуем 
     tokens = tokenize(normal_text) #разбиваем на слова(токены)
     freq = count_freq(tokens)      #считаем частоту слов
@@ -72,12 +72,32 @@ def run_test_b_empty():
     else:
         print("CSV не совпадает")
 
+def run_test_c():
+    '''Тест С: кодировка cp1251'''
+    print("\n" + "="*40)
+    print("ТЕСТ С: кодировка cp1251")
+    print("="*40)
+    
+    input_file = "data/lab04/input_cp1251.txt"
+    output_file = "data/lab04/report_cp1251.csv"
+
+    ensure_parent_dir(input_file)
+    Path(input_file).write_text("Привет", encoding = "cp1251")
+
+    print("---Запуск для cp1251---")
+    generate_report(input_file,output_file,encoding="cp1251")
+    print("--Результат в report_cp1251---")
+    print(read_text(output_file))
+                                
+
 if __name__ == "__main__":
     run_test_a()
     run_test_b_empty()
+    run_test_c()
+
 
 # python -m src.lab04.text_report
-
+# python -m src.lab04.text_report --in data/in.txt --out data/out.csv
 
 
 
