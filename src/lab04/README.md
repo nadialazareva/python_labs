@@ -83,5 +83,102 @@ def write_csv(rows: list[tuple | list], path: str | Path, header: tuple[str, ...
 *Рис.1 Проверка тест-кейсов
 
 ![Картинка 2](/image/lab04/primer1_lab04.png)
+
 ![Картинка 3](/image/lab04/primer2_lab04.png)
+
 *Рис.2 Результат записи 
+
+
+## Задание B - скрипт статистики `src/lab04/text_report.py`
+
+### Исходный код
+```python
+from src.lab04.io_txt_csv import read_text, write_csv, ensure_parent_dir
+from lib.text import normalize, tokenize, top_n, count_freq
+import argparse
+from pathlib import Path
+
+def generate_report(input_path, output_path):
+    text = read_text(input_path)   #читаем текст
+    normal_text = normalize(text)  #нормализуем 
+    tokens = tokenize(normal_text) #разбиваем на слова(токены)
+    freq = count_freq(tokens)      #считаем частоту слов
+    top_words = top_n(freq, 5)     #берем топ-5 слов
+
+    write_csv(top_words, output_path, header=("word", "count"))
+
+    total_words = len(tokens) #общее кол-во слов
+    unique_words = len(freq)  #кол-во уникальных слов
+
+    print(f"Всего слов: {total_words}")
+    print(f"Уникальных слов: {unique_words}")
+    print("Топ-5:")
+    for word, count in top_words:
+        print(f"{word}:{count}")
+```
+Объявляем функцию: указываем путь к входному файлу и путь, куда сохранить CSV. Записываем CSV с помощью функции. Берем все слова с частотами, путь и заголовок.
+
+### Проверка тест-кейсов
+#### Тест A
+```python
+def run_test_a():
+    '''Тест А: обычный файл с текстом'''
+    print("\n" + "="*40)
+    print("ТЕСТ А: Один файл")
+    print("="*40)
+
+    input_file = "data/lab04/input.txt"
+    output_file = "data/lab04/report.csv"
+
+    ensure_parent_dir(input_file)
+    Path(input_file).write_text("Привет, мир, привет!!!", encoding = "utf-8")
+
+    #Запускаем генерацию
+    generate_report(input_file, output_file)
+
+    #Проверяем CSV
+    print("\n---Проверка report.csv---")
+    actual_csv = read_text(output_file)
+    expected_csv = "word,count\nпривет,2\nмир,1\n"
+    if actual_csv==expected_csv:
+        print("CSV совпадает с ожидаемым!")
+    else:
+        print("Ошибка! CSV не совпадает с ожидаемым")
+```
+В переменные записываем пути откуда читать текст и куда сохранить CSV. Создаем текстовый файл с помощью функции, которая создает родительские папки, если их нет. `Path(input_file).write_text` создает файл `input.txt` и записыват в него текст. Проверка: читаем содержимое созданного файла; задаем эталонную строку; сравниваем реальный результат с эталоном.
+
+![](/image/lab04/testA_lab04.png)
+
+#### Тест B
+```python
+def run_test_b_empty():
+    '''Тест B: пустой файл'''
+    print("\n" + "="*40)
+    print("ТЕСТ B: Пустой файл")
+    print("="*40)
+
+    input_file = "data/lab04/empty.txt"
+    output_file = "data/lab04/report_empty.csv"
+
+    #Создаем пустой входной файл
+    write_csv([],input_file)
+    #Запускаем генерацию
+    generate_report(input_file,output_file)
+
+    #Проверяем CSV
+    print("\n---Проверка report_empty.csv---")
+    actual_csv = read_text(output_file)
+    expected_csv = "word,count\n"
+    if actual_csv==expected_csv:
+        print("CSV корректен")
+    else:
+        print("CSV не совпадает")
+
+if __name__ == "__main__":
+    run_test_a()
+    run_test_b_empty()
+```
+Создаем пустой файл с помощью функции `write_csv`(передаем пустой список и путь). Аналогично тесту А проверяем корректность CSV.
+
+![](/image/lab04/testB_lab04.png)
+
