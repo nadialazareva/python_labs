@@ -119,4 +119,5 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
 ## Тесты задания А и проверка на совпадение длины
 
 Файлы([Нажми сюда](../../data/)):
+
 ![](/image/lab05/testA_lab05.png)
