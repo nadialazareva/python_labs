@@ -195,21 +195,21 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
 for i, wid in wid.items():
     ws.column_dimensions[get_column_letter(i)].wid = max(wid, 8)
 ```
--превращаем номера колонок в буквы
--берем найденную длину и сравниваем, ищем максимум
+- превращаем номера колонок в буквы
+- берем найденную длину и сравниваем, ищем максимум
 
 ## Тесты задания В и проверка на совпадение длины
 ![](/image/lab05/testB_lab05.png)
--создается файл `people_from_csv.xlsx`
+- создается файл `people_from_csv.xlsx`
 
 ## Примеры данных и результаты
 
--`data/lab05/samples/people.json` — список людей в формате JSON;
--`data/lab05/samples/people.csv` — те же данные в формате CSV;
--`data/lab05/samples/cities.csv` — дополнительный CSV с городами;
--`data/lab05/out/people_from_json.csv` — результат JSON → CSV;
--`data/lab05/out/people_from_csv.json` — результат CSV → JSON;
--`data/lab05/out/people.xlsx` — результат CSV → XLSX.
+- `data/lab05/samples/people.json` — список людей в формате JSON;
+- `data/lab05/samples/people.csv` — те же данные в формате CSV;
+- `data/lab05/samples/cities.csv` — дополнительный CSV с городами;
+- `data/lab05/out/people_from_json.csv` — результат JSON → CSV;
+- `data/lab05/out/people_from_csv.json` — результат CSV → JSON;
+- `data/lab05/out/people.xlsx` — результат CSV → XLSX.
 
 ## Проверка результатов
 
