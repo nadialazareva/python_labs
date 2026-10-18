@@ -121,3 +121,109 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
 Файлы([Нажми сюда](../../data/)):
 
 ![](/image/lab05/testA_lab05.png)
+
+## Задание В: CSV -> XLSX
+
+### Функция `csv_to_xlsx`
+```python
+import csv
+import openpyxl
+from openpyxl import Workbook
+from pathlib import Path
+from openpyxl.utils import get_column_letter
+
+def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
+    '''Преобразовать CSV в Excel
+
+    Первая строка CSV становится заголовком таблицы, лист называется Sheet1
+    Ширина колонки равна длине самого длинного текста
+
+    Raises:
+        FileNotFoundError: входного файла нет.
+        ValueError: не то расширение или в CSV нет данных.
+    '''
+
+    csv_file = Path(csv_path)
+    xlsx_file = Path(xlsx_path)
+    if not csv_file.is_file():
+        raise FileNotFoundError(f"Файл не найден: {csv_path}")
+    if csv_file.suffix.lower() != '.csv': #проверяем расширение файла
+        raise ValueError(f"Неверный тип файла. Ожидался: csv, получен: {csv_file.suffix}")
+
+    try:
+        with open(csv_file, 'r', encoding = 'utf-8') as f:
+            reader = csv.reader(f) #читает построчно и превращает каждую строку в список
+            data = list(reader) #сохраняет все строки в виде списка списков
+    except Exception as e:
+        raise ValueError(f"Ошибка чтения CSV: {e}")
+
+    if not data or len(data)<2:
+        raise ValueError("в CSV файле нет данных")
+
+    try:
+        wb = Workbook() #создает в памяти новую книгу Excel
+        ws = wb.active #берет первый и единственный лист в книге
+        ws.title = "Sheet1"
+
+        for row in data:
+            ws.append(row) #записывает каждую строку в блокнот
+
+        #ищем саммый длинный текст в колонке
+        wid = {}
+        for row in data:
+            for i, value in enumerate(row, start=1):
+                wid[i] = max(wid.get(i,0), len(value))
+
+        #у нас должна храниться ширина по букве колонки, а не по номеру
+        for i, wid in wid.items():
+            ws.column_dimensions[get_column_letter(i)].width = max(wid, 8)
+        wb.save(xlsx_file)
+    except Exception as e:
+        raise ValueError(f"Ошибка при создании XLSX файла: {e}")
+```
+Что делает функция:
+1. Проверяет существование файла
+2. Проверяет расширение
+3. Читает строки в кодировке UTF-8
+3. Создает книгу Excel с помощью openpyxl
+4. Добавляет строки CSV в лист Sheets
+5. Рассчитывает ширину столбцов
+6. Сохраняет результат по указанному пути
+
+Как рассчитывается ширина столбца: 
+```python
+for i, wid in wid.items():
+    ws.column_dimensions[get_column_letter(i)].wid = max(wid, 8)
+```
+-превращаем номера колонок в буквы
+-берем найденную длину и сравниваем, ищем максимум
+
+## Тесты задания В и проверка на совпадение длины
+![](/image/lab05/testB_lab05.png)
+-создается файл `people_from_csv.xlsx`
+
+## Примеры данных и результаты
+
+-`data/lab05/samples/people.json` — список людей в формате JSON;
+-`data/lab05/samples/people.csv` — те же данные в формате CSV;
+-`data/lab05/samples/cities.csv` — дополнительный CSV с городами;
+-`data/lab05/out/people_from_json.csv` — результат JSON → CSV;
+-`data/lab05/out/people_from_csv.json` — результат CSV → JSON;
+-`data/lab05/out/people.xlsx` — результат CSV → XLSX.
+
+## Проверка результатов
+
+### 1. JSON -> CSV
+![](/image/lab05/json_to_csv.png)
+
+*Рис 1. Результат преобразования JSON в CSV.*
+
+### 2. CSV -> JSON
+![](/image/lab05/csv_to_json.png)
+
+*Рис. 2. Результат преобразования CSV в JSON.*
+
+### 3. CSV → XLSX
+![](/image/lab05/csv_to_xlsx.png)
+
+*Рис. 3. Результат преобразования CSV в XLSX.*
