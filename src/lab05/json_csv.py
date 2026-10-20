@@ -72,9 +72,9 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
     try:
         with open(csv_file, 'r', encoding = 'utf-8', newline = '') as f:
             reader = csv.DictReader(f)
-        if reader.fieldnames is None:
-            raise ValueError('CSV-файл пуст или нет заголовка')
-        data = list(reader)
+            if reader.fieldnames is None:
+                raise ValueError('CSV-файл пуст или нет заголовка')
+            data = list(reader)
         if not data:
             raise ValueError('CSV-файл не содержит данных(только заголовок)')
         
@@ -82,6 +82,8 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
         raise ValueError(f"Ощибка чтения CSV")
     
     try:
+        Path(json_path).parent.mkdir(parents=True, exist_ok=True)
+        
         with open(json_path, 'w', encoding = 'utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
     except IOError as e:
@@ -116,6 +118,7 @@ if __name__ == "__main__":
         #-------------------------------------
 
         print('Test2: CSV -> JSON')
+        csv_to_json(out_csv, out_json)
         with open(out_json, 'r', encoding = 'utf-8') as f:
             final_j_len = len(json.load(f))
         print(f"---Zapisi CSV: {c_len}")
