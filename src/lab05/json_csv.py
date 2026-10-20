@@ -71,7 +71,7 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
 
     try:
         with open(csv_file, 'r', encoding = 'utf-8', newline = '') as f:
-            reader = csv.DictResder(f)
+            reader = csv.DictReader(f)
         if reader.fieldnames is None:
             raise ValueError('CSV-файл пуст или нет заголовка')
         data = list(reader)
