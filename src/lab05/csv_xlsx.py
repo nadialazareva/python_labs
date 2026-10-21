@@ -31,7 +31,7 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
     except Exception as e:
         raise ValueError(f"Ошибка чтения CSV: {e}")
 
-    if not data or len(data)<2:
+    if not data:
         raise ValueError("в CSV файле нет данных")
 
     try:
