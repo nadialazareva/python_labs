@@ -98,7 +98,7 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
                 raise ValueError('CSV-файл пуст или нет заголовка')
             data = list(reader)
         if not data:
-            raise ValueError('CSV-файл не содержит данных(только заголовок)')
+            raise ValueError('CSV-файл не содержит данных')
         
     except csv.Error as e:
         raise ValueError(f"Ощибка чтения CSV")
