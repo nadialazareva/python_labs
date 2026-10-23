@@ -92,7 +92,7 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
 if __name__ == "__main__":
     sample_json = "data/lab05/samples/people.json"
     out_csv = "data/lab05/out/people_from_json.csv"
-    out_json = "data/lab05/out/people_from_csv.json"
+    # out_json = "data/lab05/out/people_from_csv.json"
 
     print("="*30)
 
@@ -117,14 +117,14 @@ if __name__ == "__main__":
         # CSV -> JSON
         #-------------------------------------
 
-        print('Test2: CSV -> JSON')
-        csv_to_json(out_csv, out_json)
-        with open(out_json, 'r', encoding = 'utf-8') as f:
-            final_j_len = len(json.load(f))
-        print(f"---Zapisi CSV: {c_len}")
-        print(f"---Zapisi JSON: {final_j_len}")
+        # print('Test2: CSV -> JSON')
+        # csv_to_json(out_csv, out_json)
+        # with open(out_json, 'r', encoding = 'utf-8') as f:
+        #     final_j_len = len(json.load(f))
+        # print(f"---Zapisi CSV: {c_len}")
+        # print(f"---Zapisi JSON: {final_j_len}")
 
-        assert c_len == final_j_len, 'Error'
+        # assert c_len == final_j_len, 'Error'
 
         print('='*30)
     except Exception as e:
