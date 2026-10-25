@@ -5,17 +5,12 @@
 ### Что делает программа:
 ### Утилиты:
 #### 1. cli_text
-- stats
-    `stats --input <путь> [--top N]` (считает слова, выводит Топ-N)
-- cat
-    `cat --input <путь> [-n]`(выводит файл построчно, `-n` нумерует строки)
+- stats --> `stats --input <путь> [--top N]` (считает слова, выводит Топ-N)
+- cat --> `cat --input <путь> [-n]`(выводит файл построчно, `-n` нумерует строки)
 #### 2. cli_convert
-    -json2csv
-    --in, --out (JSON -> CSV)
-    - csv2json
-    --in, --out (CSV -> JSON)
-    - csv2xlsx
-    --in, --out (SCV -> XLSX)
+- json2csv --> --in, --out (JSON -> CSV)
+- csv2json --> --in, --out (CSV -> JSON)
+- csv2xlsx -->--in, --out (SCV -> XLSX)
 
 >- С помощью `add.subparsers` создаются подкоманды (`stats`, `cat`, `json2csv` и др.)
 >- `dest` служит для того, чтобы переименовать переменную, которую argparse придумал автоматически
