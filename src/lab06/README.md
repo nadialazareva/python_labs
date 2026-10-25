@@ -54,7 +54,14 @@ python -m src.lab06.cli_text cat --input data/lab05/samples/people.csv -n
 4:Carlos,30,Kazan
 5:Dana,21,SPB
 6:Andrey,27,Novosibirsk
-
+```
+```
+Привет, всем! Это моя лабораторная работа по программированию.
+Python - это по-настоящему простой язык программирования.
+Я надеюсь мне поставят хороший балл за это!
+Ёжики живут в лесу
+```
+```
 python -m src.lab06.cli_text stats --input data/lab06/samples/people.txt --top 5
 Всего слов: 26
 Уникальных слов: 24
@@ -69,3 +76,16 @@ python:1
 
 ![](/image/lab06/test2_lab06.png)
 
+## Задание В: Конвертеры (`cli_convert.py`)
+
+Модуль создает утилиту с тремя подкомандами: `json2csv`, `csv2json`, `csv2xslx`. Подкоманды вызывают функции из ЛР5(`json_to_csv`, `csv_to_json`, `csv_to_xlsx`). Обязательно вводить `--in`(входной файл) и `out`(выходной файл).
+![](/image/lab06/test3_lab06.png)
+
+```
+python -m src.lab06.cli_convert json2csv --in data/lab05/samples/people.json --out data/lab05/out/people.csv
+python -m src.lab06.cli_convert csv2json --in data/lab05/samples/people.csv --out data/lab05/out/people.json
+python -m src.lab06.cli_convert csv2xlsx --in data/lab05/samples/people.csv --out data/lab05/out/people.xlsx
+```
+## Справка --help
+Это инструкция по эксплуатации программы, которая генерируется автоматически
+![](/image/lab06/test4_lab06.png)
