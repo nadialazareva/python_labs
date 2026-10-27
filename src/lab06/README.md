@@ -10,7 +10,7 @@
 #### 2. cli_convert
 - json2csv --> --in, --out (JSON -> CSV)
 - csv2json --> --in, --out (CSV -> JSON)
-- csv2xlsx -->--in, --out (SCV -> XLSX)
+- csv2xlsx -->--in, --out (CSV -> XLSX)
 
 >- С помощью `add.subparsers` создаются подкоманды (`stats`, `cat`, `json2csv` и др.)
 >- `dest` служит для того, чтобы переименовать переменную, которую argparse придумал автоматически
