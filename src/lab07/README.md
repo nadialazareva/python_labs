@@ -114,3 +114,141 @@ def bubble_sort(nums: list[int]) -> list[int]:
             break
     return a
 ```
+>- создаем копию листа, чтобы не поменялись изначальные данные
+>- многократно проходим по списку, сравнивая соседние элементы
+>- меняем местами, если они стоят не по порядку
+>- заводим флаг `flag`, если за проходи не было обменов, выходим через `break`
+
+### insertion_sort
+```python
+def insertion_sort(nums: list[int]) -> list[int]:
+    """Сортирует список методом вставок.
+    Создает и возвращает новый отсортированный список, не меняя исходный.
+    Принимает исходный, возвращает новый.
+    """
+    a = list(nums)
+    for i in range(1,len(a)):
+        key = a[i]
+        j = i - 1
+        while j>=0 and a[j]>key:
+            a[j + 1] = a[j]
+            j-=1 
+        a[j + 1] = key
+    return a
+```
+>- запоминаем элемент `key`. внутренний цикл `while` сдвигает все элементы, большие `key` вправо
+>- как только мы находим элемент меньше `key`, мы ставим `key`сразу после него
+
+### selection_sort
+```python
+def selection_sort(nums: list[int]) -> list[int]:
+    """Сортирует список методом выбора.
+    Создает и возвращает новый отсортированный список, не изменяя исходный.
+    Принимает исходный, возвращает новый.
+    Сложность O(n^2)
+    """
+    a = list(nums)
+    n = len(a)
+    for i in range(n):
+        minidx = i
+        for j in range(i + 1, n):
+            if a[j] < a[minidx]:
+                minidx = j
+        a[i], a[minidx] = a[minidx], a[i]
+    return a
+```
+>- делим список на две части: слева-отсортированная, справа-нет
+>- на каждом шаге ищем минимальный элемент в неотсортированной части и меняем его местами с первым элементом этой части
+>- обмен один раз за проход
+
+## Задание C: проверка
+
+### check_sorting
+```python
+def check_sorting(fn, trials: int = 100) -> int:
+
+    for _ in range(trials):
+        n = random.randint(0,50)
+        nums = [random.randint(-100, 100) for _ in range(n)]
+        original = list(nums)
+        result = fn(nums)
+        assert result == sorted(nums), f"{fn.__name__} ошиблась на {nums}: получено {result}, ожидалось {sorted(nums)}"
+        assert nums == original, f"{fn.__name__} изменила исходный список"
+    return trials
+```
+>- проверяем любую функцию сортировки против эталонного `sorted`
+>- генерируем 100 случайных списков разной длины, сортируем и сравниваем
+>- проверяем, что моя функция не изменила исходный список
+
+### check_search (linear)
+```python
+def check_search(trials: int = 100) -> int:
+
+    for _ in range(trials):
+        n = random.randint(0,50)
+        nums = [random.randint(-50,50) for _ in range(n)]
+        x = random.randint(-60,60)
+
+        # Линейный поиск против list.index
+        try:
+            expected_lin = nums.index(x)
+        except ValueError:
+            expected_lin = -1 #если числа нет, то правильный ответ(эталон) =-1
+        actual_lin = linear_search(nums, x)
+        assert actual_lin == expected_lin, f"linear_search ошиблась для поиска {x} в {nums}: получено {actual_lin}, ожидалось {expected_lin}"
+```
+>- генерируем 100 случайных списков разной длины
+>- сравниваем результат с методом списков `index()`
+>- если числа нет, перехватываем ошибку и выводим -1
+>- проверяем, что моя функция не изменила исходный список
+
+### check_search (binary)
+```python
+        sorted_nums = sorted(nums)
+        try:
+            expected_bin = sorted_nums.index(x)
+        except ValueError:
+            expected_bin = -1
+        actual_bin = binary_search(sorted_nums, x)
+        if expected_bin == -1:
+            assert actual_bin == -1, f"binary_search не нашла элемент, которого нет: {x} в {sorted_nums}"
+        else:
+            assert actual_bin != -1 and sorted_nums[actual_bin] == x, f"binary_search вернула некорректный индекс {actual_bin} для {x} в {sorted_nums}"
+    return trials
+```
+>- сортируем данные. если этого не сделать, программа найдет неверный ответ или упадет с ошибкой
+>- проверяем, нашел ли алгоритм правильный индекс(или вернул -1, если элемента нет)
+
+### check_two_sum
+```python
+def check_two_sum(trials: int = 100) -> int:
+
+    for _ in range(trials):
+        n = random.randint(2,30)
+        nums = [random.randint(-30, 30) for _ in range(n)]
+        target = random.randint(-50, 50)
+
+        res_brute = two_sum_brute(nums, target)
+        res_fast = two_sum_fast(nums, target)
+
+        #если медленный ниечго не нашел, то быстрый тоже
+        #если медленный нашел, то быстрый не пустой
+        if res_brute is None:
+            assert res_fast is None, f"two_sum_brute не нашла, а fast нашла {res_fast} для nums={nums}, target={target}"
+            continue
+        assert res_fast is not None, f"two_sum_brute не нашла {res_brute}, fast не нашла для для nums={nums}, target={target} "
+
+        #если нашли, проверяем сумму
+        if res_brute:
+            i, j = res_brute
+            assert nums[i] + nums[j] == target, f"brute вернул неверные индексы: {res_brute}"
+            i,j = res_fast
+            assert nums[i] + nums[j] == target, f"fast вернул неверные индексы: {res_fast}"
+    return trials
+```
+>- генерируем 100 случайных списков разной длины и целевую сумму
+>- запускаем оба алгоритма и проверяем, что оба дали одинаковый результат
+>- если один ничего не нашел, то второй тоже должен быть `None`
+>- если нашли индексы, проверяем сумму
+
+![](/image/lab07/lab07_01.png)
