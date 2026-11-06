@@ -24,7 +24,6 @@ def insertion_sort(nums: list[int]) -> list[int]:
     """Сортирует список методом вставок.
     Создает и возвращает новый отсортированный список, не меняя исходный.
     Принимает исходный, возвращает новый.
-    Сложность O(n)
     """
     a = list(nums)
     for i in range(1,len(a)):
@@ -32,7 +31,7 @@ def insertion_sort(nums: list[int]) -> list[int]:
         j = i - 1
         while j>=0 and a[j]>key:
             a[j + 1] = a[j]
-            j-=1
+            j-=1 
         a[j + 1] = key
     return a
 
