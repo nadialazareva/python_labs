@@ -1,6 +1,6 @@
 from datetime import date
 
-STUDENT_FIELDS = ("fio", "birthdate", "group", "gpa")
+STUDENT_FIELDS = ("fio", "birthdate", "group", "gpa") # эталон
 
 def validate_student(rec: dict) -> None:
     if not isinstance(rec, dict):
@@ -18,11 +18,11 @@ def validate_student(rec: dict) -> None:
     if not isinstance(birthdate, str):
         raise ValueError('birthdate требует формат YYYY-MM-DD')
     try:
-        birthday = date.fromisoformat(birthdate)
+        birthday = date.fromisoformat(birthdate) #преобразовываем строку в объект даты
     except ValueError:
         raise ValueError('birthdate: неверная дата или формат')
 
-    if birthday.isoformat() != birthdate:
+    if birthday.isoformat() != birthdate: #проверка на строгий формат(добавляем недостающие нули)
         raise ValueError('нужен формат YYYY-MM-DD')
 
     if birthday > date.today():
@@ -47,7 +47,7 @@ def student_age(rec: dict, today: date | None=None) -> int:
     '''Считаем полные годы на указанную дату'''
     if today is None:
         today = date.today()
-    birthday = date.fromisoformat(rec["birthdate"])
+    birthday = date.fromisoformat(rec["birthdate"]) #превращаем строку даты рожд. в объект даты
     age = today.year - birthday.year
     if (today.month, today.day) < (birthday.month, birthday.day):
         age-=1
