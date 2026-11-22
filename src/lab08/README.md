@@ -1,10 +1,10 @@
 # ЛР8 - Модель данных без классов: запись Student как словарь, валидация и сериализация
 
-## Задание A - Модель данных и функции (`models.py`)
-
 `src/lab08/models.py` — запись студента как словарь с полями `fio`, `birthdate`, `group`, `gpa`
 
 `src/lab08/serialize.py` — сохранение и загрузка студентов в JSON, чтение CSV
+
+## Задание A - Модель данных и функции (`models.py`)
 
 ### Описание структуры записи и логики функций:
 
@@ -140,7 +140,7 @@ def students_to_json(students: list[dict], path: str | Path) -> None:
         json.dump(data, file, ensure_ascii=False, indent=2)
 ```
 
--**`students_from_json(path: str | Path) -> list[dict]`** - читает JSON-файл, преобразует его в список и десериализует каждую запись.
+- **`students_from_json(path: str | Path) -> list[dict]`** - читает JSON-файл, преобразует его в список и десериализует каждую запись.
 
 ```python
 def students_from_json(path: str | Path) -> list[dict]:

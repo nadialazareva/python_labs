@@ -5,6 +5,7 @@ import sys
 from src.lab08.models import format_student, make_student
 from src.lab09 import group
 
+
 def main() -> int:
     '''Выполнить команду хранилища студентов'''
     parser = argparse.ArgumentParser(description="Хранилище студентов на CSV")
@@ -64,6 +65,9 @@ def main() -> int:
 
             if not fields:
                 parser.error("укажите хотя бы одно поле для обновления: --birthdate, --group или --gpa")
+
+            if group.update_student(args.db, args.fio, **fields):
+                print(f"Обновлено: {args.fio}")
     
     except (ValueError, KeyError, OSError, csv.Error) as error:
         print(f'Ошибка: {error}', file=sys.stderr)

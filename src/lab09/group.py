@@ -56,10 +56,9 @@ def save_students(path: str | Path, students: list[dict]) -> None:
 def add_student(path: str | Path, student: dict) -> None:
     '''Добавляем студента без дубликатов по ФИО'''
     validate_student(student)
-    student = student_from_dict(student)
     students = load_students(path)
     for existing in students: #перебор по существующим студентам
-        if existing['fio'] == student['student']:
+        if existing['fio'] == student['fio']:
             raise ValueError('Студент с таким ФИО уже существует')
     students.append(student)
     save_students(path, students)
