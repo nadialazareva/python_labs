@@ -8,7 +8,7 @@
 
 ### Описание структуры записи и логики функций:
 
-- **`validate_student(rec: dict) -> None` - проверяет набор ключей, непустое ФИО, группу, существующую дату не из будущего и GPA от 0 до 5
+- **`validate_student(rec: dict) -> None`** - проверяет набор ключей, непустое ФИО, группу, существующую дату не из будущего и GPA от 0 до 5
 
 ```python
 def validate_student(rec: dict) -> None:
@@ -44,7 +44,7 @@ def validate_student(rec: dict) -> None:
         raise ValueError('gpa: требуется значение от 0 до 5')
 ```
 
-- **`make_student(fio, birthdate, group, gpa) -> dict` - создает запись, убирает пробелы по краям и приводит GPA к float
+- **`make_student(fio, birthdate, group, gpa) -> dict`** - создает запись, убирает пробелы по краям и приводит GPA к float
 
 ```python
 def make_student(fio, birthdate, group, gpa) -> dict:
@@ -57,7 +57,7 @@ def make_student(fio, birthdate, group, gpa) -> dict:
     return rec
 ```
 
-- **`student_age(rec: dict, today: date | None=None) -> int` - вычисляет полные годы на заданную дату `today`(по умолчанию `date.today()`), учитывая, наступил ли уже день рождения в текущем году
+- **`student_age(rec: dict, today: date | None=None) -> int`** - вычисляет полные годы на заданную дату `today`(по умолчанию `date.today()`), учитывая, наступил ли уже день рождения в текущем году
 
 ```python
 def student_age(rec: dict, today: date | None=None) -> int:
@@ -71,7 +71,7 @@ def student_age(rec: dict, today: date | None=None) -> int:
     return age
 ```
 
-- **`format_student(rec: dict) -> str` - преобразует запись в читаемый вид. GPA с двумя знаками после точки
+- **`format_student(rec: dict) -> str`** - преобразует запись в читаемый вид. GPA с двумя знаками после точки
 
 ```python
 def format_student(rec: dict) -> str:
@@ -86,7 +86,7 @@ def format_student(rec: dict) -> str:
     return f"{surname} {initials} ({rec['group']}), {age} лет, GPA {rec['gpa']:.2f}"
 ```
 
-- **`student_to_dict(rec: dict) -> dict` - валидирует запись и возвращает ее независимую копию, предотвращая мутации данных
+- **`student_to_dict(rec: dict) -> dict`** - валидирует запись и возвращает ее независимую копию, предотвращая мутации данных
 
 ```python
 def student_to_dict(rec: dict) -> dict:
@@ -95,7 +95,7 @@ def student_to_dict(rec: dict) -> dict:
     return rec.copy()
 ```
 
-- **`student_from_dict(d: dict) -> dict` - осуществляет десериализацию словаря, приводит `gpa` к типу `float` и проводит строгую валидацию
+- **`student_from_dict(d: dict) -> dict`** - осуществляет десериализацию словаря, приводит `gpa` к типу `float` и проводит строгую валидацию
 
 ```python
 def student_from_dict(d: dict) -> dict:
@@ -130,7 +130,7 @@ def student_from_dict(d: dict) -> dict:
 
 Модуль отвечает за экспорт и импорт данных в формате JSON. Расположен в `src/lab08/serialize.py`.
 
-- **`students_to_json(students: list[dict], path: str | Path) -> None` - выполняет сериализацию списка студентов в JSON-файл с предварительной валидацией каждого элемента. Параметры: `ensure_ascii=False`, `indent=2`
+- **`students_to_json(students: list[dict], path: str | Path) -> None`** - выполняет сериализацию списка студентов в JSON-файл с предварительной валидацией каждого элемента. Параметры: `ensure_ascii=False`, `indent=2`
 
 ```python
 def students_to_json(students: list[dict], path: str | Path) -> None:
@@ -140,7 +140,7 @@ def students_to_json(students: list[dict], path: str | Path) -> None:
         json.dump(data, file, ensure_ascii=False, indent=2)
 ```
 
--**`students_from_json(path: str | Path) -> list[dict]` - читает JSON-файл, преобразует его в список и десериализует каждую запись.
+-**`students_from_json(path: str | Path) -> list[dict]`** - читает JSON-файл, преобразует его в список и десериализует каждую запись.
 
 ```python
 def students_from_json(path: str | Path) -> list[dict]:
