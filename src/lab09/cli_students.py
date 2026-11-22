@@ -66,8 +66,8 @@ def main() -> int:
             if not fields:
                 parser.error("укажите хотя бы одно поле для обновления: --birthdate, --group или --gpa")
 
-            if group.update_student(args.db, args.fio, **fields):
-                print(f"Обновлено: {args.fio}")
+            found = group.update_student(args.db, args.fio, **fields)
+            print('Запись обновлена' if found else 'Студент не найден')
     
     except (ValueError, KeyError, OSError, csv.Error) as error:
         print(f'Ошибка: {error}', file=sys.stderr)
