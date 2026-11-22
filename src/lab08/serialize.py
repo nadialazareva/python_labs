@@ -4,10 +4,6 @@ from datetime import date
 
 from src.lab04.io_txt_csv import read_text
 from src.lab08.models import(
-    STUDENT_FIELDS,
-    format_student,
-    make_student,
-    student_age,
     student_from_dict,
     student_to_dict,
     )

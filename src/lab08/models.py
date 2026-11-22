@@ -10,13 +10,13 @@ def validate_student(rec: dict) -> None:
         raise ValueError('нужны только поля fio, birthdate, group, gpa')
 
     for field in ('fio', 'group'):
-        value = rec[field]
+        value = rec[field] # достаем значение по ключу
         if not isinstance(value, str) or not value.strip():
             raise ValueError(f'{field}: нужна непустая строка')
         
     birthdate = rec['birthdate']
     if not isinstance(birthdate, str):
-        raise ValueError('birthdate требует формат YYYY-MM-DD')
+        raise ValueError('birthdate должна быть строкой')
     try:
         birthday = date.fromisoformat(birthdate) #преобразовываем строку в объект даты
     except ValueError:
@@ -37,10 +37,10 @@ def validate_student(rec: dict) -> None:
 def make_student(fio, birthdate, group, gpa) -> dict:
     '''Создаем проверенную запись студента'''
     rec = {"fio": fio, "birthdate": birthdate, "group": group, "gpa": gpa}
-    validate_student(rec)
     rec['fio'] = fio.strip()
     rec['group'] = group.strip()
     rec['gpa'] = float(gpa)
+    validate_student(rec)
     return rec
 
 def student_age(rec: dict, today: date | None=None) -> int:
@@ -62,7 +62,7 @@ def format_student(rec: dict) -> str:
     initials = "".join(f"{part[0].upper()}." for part in fio_parts[1:])
 
     age = student_age(rec)
-    return f"{surname} {initials} ({rec['group']}), {age} лет, GPA {rec['gpa']}"
+    return f"{surname} {initials} ({rec['group']}), {age} лет, GPA {rec['gpa']:.2f}"
 
 def student_to_dict(rec: dict) -> dict:
     '''Возвращаем копию записи для сериализации'''
