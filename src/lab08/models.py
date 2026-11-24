@@ -47,7 +47,15 @@ def student_age(rec: dict, today: date | None=None) -> int:
     '''Считаем полные годы на указанную дату'''
     if today is None:
         today = date.today()
-    birthday = date.fromisoformat(rec["birthdate"]) #превращаем строку даты рожд. в объект даты
+    birthdate = rec["birthdate"]
+    
+    if not isinstance(birthdate, str):
+        raise ValueError('birthdate: дата рождения должна быть строкой')
+    try:
+        birthday = date.fromisoformat(rec["birthdate"]) #превращаем строку даты рожд. в объект даты
+    except ValueError:
+        raise ValueError('birthdate: неверный формат даты')
+    
     age = today.year - birthday.year
     if (today.month, today.day) < (birthday.month, birthday.day):
         age-=1
